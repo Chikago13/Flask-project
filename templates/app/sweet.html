@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/main.css')}}">
+    {% if title %}
+        <title>{{title}}</title>
+    {% endif %}
+
+</head>
+<body>
+    <div class="navigation">
+        <ul>
+            {% for m in menu %}
+            <li><a href="{{ m.url }}">{{ m.name }}</a></li>
+            {% endfor%}
+        </ul>
+    </div>
+    <form method="post" action="{{url_for('sweet')}}">
+        <div class="input-group">
+            <h3>Выберите вид сладости:</h3>
+        {% if sweet_type %}
+        {% for i in sweet_type %}
+        <input type="radio" name = "sweet" value="{{i[0]}}" id="{{i[0]}}">
+        <label for="{{i[0]}}" class="user-label">
+            {{i[1]}}
+        </label><br>
+        {% endfor %}
+        {% endif %}
+        <h3>Введите Название сладости:</h3>
+        <input required="" type="text" name = "sweet_name" autocomplete="off" class="input" >
+        <label for="sweet_name" class="user-label">
+            Введите Название сладости:
+        </label><br>
+        <h3>Введите Стоимость:</h3>
+        <input required="" type="text" name = "cost" autocomplete="off" class="input" >
+        <label for="cost" class="user-label">
+            Введите Стоимость:
+        </label><br>
+        <h3>Введите Вес:</h3>
+        <input required="" type="text" name = "weight" autocomplete="off" class="input" >
+        <label for="weight" class="user-label">
+            Введите Вес:
+        </label><br>
+        <h3>Есть ли сахар в составе</h3>
+        <input  id= "with_sugar" required="" type="radio" name = "sugar" value="yes" >
+        <label for="with_sugar" >
+            yes
+        </label><br>
+        <input id= "without_sugar" required="" type="radio" name = "sugar" value="no" >
+        <label for="without_sugar">
+            no
+        </label><br>
+        <h3>Выберите Производителя:</h3>
+        {% if name_manuf %}
+        {% for i in name_manuf %}
+        <input id="{{i[0]}}" type="radio" name = "manufact" value="{{i[0]}}">
+        <label for="{{i[0]}}">{{i[1]}}</label>
+        {% endfor %}
+        {% endif %}
+        <h3>Выберите склад:</h3>
+        {% if name_store %}
+        {% for i in name_store %}
+        <input id="{{i[0]}}" type="radio" name = "store" value="{{i[0]}}">
+        <label for="{{i[0]}}">{{i[1]}}</label>
+        {% endfor %}
+        {% endif %}
+        <h3>Введите дату производства:</h3>
+        <input name="creat_date" type="date">
+        <h3>Введите дату окончания срока годности:</h3>
+        <input name="end_date" type="date"><br>
+        <br><input class="button" type="submit" value="Send">
+        </div>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Название сладости</th>
+                <th>Производитель</th>
+                <th>Вес</th>
+                <th>Цена</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            {% for s in name_sweet %}
+            <td>{{ s[0] }}
+            <td>{{ s[3] }}
+            <td>{{ s[2] }}
+            <td>{{ s[1] }}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,42 @@
+
+<head>
+<title>{{title}}</title>
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/main.css')}}">
+</head>
+<body>
+    <div class="navigation">
+        <ul>
+            {% for m in menu %}
+            <li><a href="{{ m.url }}">{{ m.name }}</a></li>
+            {% endfor%}
+        </ul>
+    </div>
+    
+    <h3>Склады :</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Название склада:</th>
+            <th>Город:</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        {% if st_get %}
+        {% for s in st_get %}
+        <td>{{ s[0] }}
+        <td>{{ s[1] }}
+        </tr>
+        {% endfor %}
+        {% else %}
+        <td>Нет складов!</td>
+        {% endif%}
+    </tbody>
+</table>
+</body>
+
+

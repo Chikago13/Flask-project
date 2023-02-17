@@ -1,0 +1,64 @@
+<head>
+<title>{{title}}</title>
+
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/main.css')}}">
+<script src="{{ url_for( 'static', filename='js/jquery-3.6.3.min.js.js')}}"></script>
+</head>
+<body>
+<div class="navigation">
+    <ul>
+        {% for m in menu %}
+        <li><a href="{{ m.url }}">{{ m.name }}</a></li>
+        {% endfor%}
+    </ul>
+</div>
+    <table id="more_i" style="display: none;">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Телефон</th>
+                <th>Адрес</th>
+                <th>Город</th>
+                <th>Строна</th>
+                <tbody id="more_info"></tbody>
+            </tr>
+        </thead>
+    </table> 
+    <h3>Склады :</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Название производителя:</th>
+            <th>Город:</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        {% if mn %}
+        {% for s in mn %}
+        <td style="cursor: pointer;" onclick="manufact_info({{s[2]}})" >{{ s[0] }}
+        <td onclick="manufact_info({{s[2]}})">{{ s[1] }}
+        </tr>
+        {% endfor %}
+        {% else %}
+        <td>Нет Производителя!</td>
+        {% endif %}
+    </tbody>
+</table>
+
+<script>
+    function manufact_info(id){
+        $.ajax({
+            url:'{{ url_for('manufact_info') }}',
+            method: 'post',
+            data: {'id': id},
+            success: function(data){
+                $('#more_info').html('<tr><td>'+data['ma_info'][0][0]+'<td>'+data['ma_info'][0][1]+'<td>'+data['ma_info'][0][2]+'<td>'+data['ma_info'][0][3]+'<td>'+data['ma_info'][0][4]+'</tr>')
+                $('#more_i').show()
+            }
+        })
+
+    }
+</script>
+
+</body>

@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+{%block title%}
+    {{ super() }}
+{%endblock%}
+
+{%block body%}
+    {{ super() }}
+    <form action = '/main' method = "POST">
+        <input class = 'form' type = 'text' name = 'login' id = 'login'>
+        <lable for='login'>Введите логин</lable>
+        <br><input class ='form' type = 'password' name = 'password' id = 'password'>
+        <lable for='password'>Введите пароль</lable>
+        <br><input class ='form' type = 'email' name = 'email' id = 'email'>
+        <lable for='email'>Введите почту</lable>
+        <br><input class ='form' type = 'submit' value='Отправить'>
+    </form>
+{%endblock%}
