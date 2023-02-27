@@ -1,0 +1,67 @@
+<head>
+    <title>{{title}}</title>
+    
+    <link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/main.css')}}">
+    <script src="{{ url_for( 'static', filename='js/jquery-3.6.3.min.js.js')}}"></script>
+    </head>
+    <body>
+    <div class="navigation">
+        <ul>
+            {% for m in menu %}
+            <li><a href="{{ m.url }}">{{ m.name }}</a></li>
+            {% endfor%}
+        </ul>
+    </div>
+    <table class="table" id="more_i" style="display: none;" >
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Цена</th>
+                <th>Вес</th>
+                <th>Присутствие сахара</th>
+                <th>Нужен холодильник</th>
+                <th>Дата производства</th>
+                <th>Дата окончания срока годности</th>
+                <tbody id="more_info"></tbody>
+            </tr>
+        </thead>
+    <table class="table">
+        <h3>Сладости и их характеристики:</h3>
+        <caption>Сладости и их характеристики:</caption>
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Цена</th>
+                <th>Вес</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            {% if sw_n %}
+            {% for s in sw_n %}
+            <td style="cursor: pointer;" onclick="sweets_info({{s[3]}})" >{{ s[0] }}
+            <td style="cursor: pointer;" onclick="sweets_info({{s[3]}})">{{ s[1] }}
+            <td style="cursor: pointer;" onclick="sweets_info({{s[3]}})">{{ s[2] }}
+            </tr>
+            {% endfor %}
+            {% else %}
+            <td>Нет сладостей!</td>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <script>
+        function sweets_info(id){
+            $.ajax({
+                url:'{{ url_for('sweets_info') }}',
+                method: 'post',
+                data: {'id': id},
+                success: function(data){
+                    $('#more_info').html('<tr><td>'+data['sw_info'][0][0]+'<td>'+data['sw_info'][0][1]+'<td>'+data['sw_info'][0][2]+'<td>'+data['sw_info'][0][3]+'<td>'+data['sw_info'][0][4]+'<td>'+data['sw_info'][0][5]+'<td>'+data['sw_info'][0][6]+'</tr>')
+                    $('#more_i').show()
+                }
+            })
+        }
+    </script>
+    
+    </body>

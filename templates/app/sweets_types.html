@@ -1,9 +1,36 @@
-{% extends 'sweet.html' %}
-
-{% block title %}
-{% endblock %}
-
-{% block content %}
-{{ sweet_tp }}
-
-{% endblock %}
+<head>
+    <title>{{title}}</title>
+    
+    <link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/main.css')}}">
+    <script src="{{ url_for( 'static', filename='js/jquery-3.6.3.min.js.js')}}"></script>
+    </head>
+    <body>
+    <div class="navigation">
+        <ul>
+            {% for m in menu %}
+            <li><a href="{{ m.url }}">{{ m.name }}</a></li>
+            {% endfor%}
+        </ul>
+    </div>
+    <br>
+    <table class="table">
+        <h3>Виды сладостей:</h3>
+        <caption>Вид сладости:</caption>
+        <thead>
+            <tr>
+                <th>Название сладости</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            {% if sw_t %}
+            {% for s in sw_t %}
+            <td>{{ s[0] }}
+            </tr>
+            {% endfor %}
+            {% else %}
+            <td>Нет названия сладости!</td>
+            {% endif %}
+        </tbody>
+    </table>
+    </body>

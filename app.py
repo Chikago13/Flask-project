@@ -7,9 +7,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 
 
-menu = [{"name":'Завод', "url": "manufact"},
+menu = [{"name": 'Главная',"url": "sweet" },
+        {"name":'Завод', "url": "manufact"},
         {"name":'Склад', "url": "store"}, 
-        {"name": 'Сладости',"url": "sweet" },
         {"name":'Найменование сладости', "url": "sweets_types" },
         {"name":'Отоброжение сладости', "url": "sweets_new" }]
 
@@ -75,7 +75,7 @@ def sweet():
 def store():
     title= 'Таблица складов:'
     if request.method =='GET':
-        st_get= cuery('mybase', ''' select s."name",s.city from public.storehouses s ''')
+        st_get= cuery('mybase', ''' select s."name",s.city, s.id from public.storehouses s ''')
     return render_template('app/store.html', title=title, st_get=st_get, menu=menu)
     
 @app.route('/manufact', methods =['GET'])
@@ -92,9 +92,31 @@ def manufact_info():
         ma_info = cuery('mybase', '''select m."name", m.phone, m.adress, m.city , m.country from public.manufacturers m where m.id = %s''', (ma_in))
         return jsonify(ma_info=ma_info)
     
+@app.route('/store_info', methods = ['POST', 'GET'])
+def store_info():
+    st_in= request.form['id']
+    st_info = cuery('mybase', '''select s."name", s.adress, s.city, s.country  from  public.storehouses s where s.id = %s''', (st_in))
+    return jsonify(st_info=st_info)
+
+@app.route('/sweets_types',methods = ['POST', 'GET'])
+def sweets_types():
+    title = 'Таблица типов сладости:'
+    if request.method == 'GET':
+        sw_t = cuery('mybase', '''select st."name"  from public.sweets_types st ''')
+        return render_template('app/sweets_types.html', title=title, sw_t=sw_t, menu=menu)
     
+@app.route('/sweets_new',methods = ['POST', 'GET'])
+def sweets_new():
+    title = 'Сладости и их характеристики:'
+    if request.method == 'GET':
+        sw_n = cuery('mybase', '''select s."name", s."cost", s.weight, s.id from  public.sweets s ''')
+        return render_template('app/sweets_new.html', title=title, sw_n=sw_n, menu=menu)
 
-
+@app.route('/sweets_info', methods = ['POST', 'GET'])
+def sweets_info():
+    sw_in= request.form['id']
+    sw_info = cuery('mybase', '''select s."name", s."cost", s.weight, s.with_sugar, s.requires_freezing, s.production_date, s.expiration_date  from public.sweets s where s.id = %s''', (sw_in,))
+    return jsonify(sw_info=sw_info)
 
 
 if __name__=='__main__':

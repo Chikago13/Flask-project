@@ -12,7 +12,7 @@
         {% endfor%}
     </ul>
 </div>
-    <table id="more_i" style="display: none;">
+    <table class="table" id="more_i" style="display: none;" >
         <thead>
             <tr>
                 <th>Название</th>
@@ -24,8 +24,9 @@
             </tr>
         </thead>
     </table> 
-    <h3>Склады :</h3>
-<table>
+    <h3>Производители:</h3>
+<table class="table">
+    <caption>Производители сладостей:</caption>
     <thead>
         <tr>
             <th>Название производителя:</th>
@@ -37,7 +38,7 @@
         {% if mn %}
         {% for s in mn %}
         <td style="cursor: pointer;" onclick="manufact_info({{s[2]}})" >{{ s[0] }}
-        <td onclick="manufact_info({{s[2]}})">{{ s[1] }}
+        <td style="cursor: pointer;" onclick="manufact_info({{s[2]}})">{{ s[1] }}
         </tr>
         {% endfor %}
         {% else %}
@@ -57,7 +58,6 @@
                 $('#more_i').show()
             }
         })
-
     }
 </script>
 

@@ -71,10 +71,12 @@
         <input name="creat_date" type="date">
         <h3>Введите дату окончания срока годности:</h3>
         <input name="end_date" type="date"><br>
-        <br><input class="button" type="submit" value="Send">
+        <br><input class="button" type="submit" value="Send"><br>
+        <br>
         </div>
     </form>
-    <table>
+    <table class="table">
+        <caption>Сладости и их характеристики:</caption>
         <thead>
             <tr>
                 <th>Название сладости</th>
@@ -94,5 +96,18 @@
             {% endfor %}
         </tbody>
     </table>
+
+<!-- <footer>
+    <script>
+        gsap.from("ul > * ", 1.8, {
+            opacity: 0,
+            y: 40,
+            ease: "power3.inOut",
+            stagger: 0.2,
+            delay: 0.3,
+        });
+    </script>
+</footer> -->
+
 </body>
 </html>
